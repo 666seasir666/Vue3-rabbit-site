@@ -30,7 +30,7 @@ module.exports = {
       }
     ],
     'vue/no-setup-props-destructure': ['off'], // 关闭 props 解构的校验
-    // 💡 添加未定义变量错误提示，create-vue@3.6.3 关闭，这里加上是为了支持下一个章节演示。
+    // 💡 用于检测未定义的变量,当您使用了未声明的变量时，ESLint 会抛出错误
     'no-undef': 'error'
   },
   globals: {
