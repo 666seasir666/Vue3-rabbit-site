@@ -6,6 +6,9 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
+// 引入初始化样式文件
+import '@/styles/common.scss'
+
 // 测试axios发起请求
 import { getCategoryAPI } from '@/apis/test'
 getCategoryAPI().then((res) => {
