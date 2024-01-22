@@ -41,7 +41,7 @@ input[type='checkbox'] {
   padding: 0;
   outline: none;
   border: none;
-  -webkit-appearance: none;
+  // -webkit-appearance: none;
   &::placeholder {
     color: #ccc;
   }
