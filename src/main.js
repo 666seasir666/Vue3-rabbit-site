@@ -7,7 +7,7 @@ import App from './App.vue'
 import router from './router'
 
 // 测试axios发起请求
-import { getCategoryAPI } from '@/apis/test.js'
+import { getCategoryAPI } from '@/apis/test'
 getCategoryAPI().then((res) => {
   console.log(res)
 })

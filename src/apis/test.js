@@ -1,4 +1,4 @@
-import require from '@/utils/require.js'
+import require from '@/utils/require'
 
 export function getCategoryAPI() {
   return require({
