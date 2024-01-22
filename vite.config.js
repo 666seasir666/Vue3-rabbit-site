@@ -47,7 +47,9 @@ export default defineConfig({
     preprocessorOptions: {
       scss: {
         // ~/styles/element/index.scss需要改成相对路径的 @
-        additionalData: `@use "@/styles/element/index.scss" as *;`
+        additionalData: `
+        @use "@/styles/element/index.scss" as *;
+        @use "@/styles/var.scss" as *;`
       }
     }
   }
