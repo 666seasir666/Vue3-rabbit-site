@@ -1,4 +1,22 @@
-<script setup></script>
+<script setup>
+// 引入 Vue 3 Composition API 中的 onMounted 和 ref 函数
+import { onMounted, ref } from 'vue'
+
+// 从 '@/apis/layout' 模块中导入 getCategoryAPI 函数
+import { getCategoryAPI } from '@/apis/layout'
+
+const categoryList = ref([])
+// 声明一个函数getCategory，用于获取分类列表
+const getCategory = async () => {
+  // 调用getCategoryAPI函数，获取分类列表
+  const res = await getCategoryAPI()
+  // 将获取到的分类列表赋值给categoryList
+  categoryList.value = res.result
+}
+
+// 当组件加载完成时，调用getCategory函数
+onMounted(() => getCategory())
+</script>
 
 <template>
   <header class="app-header">
@@ -7,12 +25,10 @@
         <RouterLink to="/">小兔鲜</RouterLink>
       </h1>
       <ul class="app-header-nav">
-        <li class="home">
-          <RouterLink to="/">首页</RouterLink>
+        <!--  v-for 来遍历名为 categoryList 的数组，并为每个 item 设置了唯一的键（key）值 -->
+        <li class="home" v-for="item in categoryList" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
-        <li><RouterLink to="/">居家</RouterLink></li>
-        <li><RouterLink to="/">美食</RouterLink></li>
-        <li><RouterLink to="/">服饰</RouterLink></li>
       </ul>
       <div class="search">
         <i class="iconfont icon-search"></i>
