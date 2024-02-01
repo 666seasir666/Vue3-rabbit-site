@@ -1,10 +1,17 @@
-<script setup></script>
+<script setup>
+import { useDark, useToggle } from '@vueuse/core'
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
+</script>
 
 <template>
   <nav class="app-topnav">
     <div class="container">
       <ul>
         <template v-if="true">
+          <el-button @click="toggleDark()">切换主题 </el-button>
+
           <li>
             <a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a>
           </li>

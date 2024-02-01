@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^10.7.2",
+    "@vueuse/shared": "^10.7.2",
     "axios": "^1.6.5",
     "element-plus": "^2.5.1",
     "pinia": "^2.1.7",

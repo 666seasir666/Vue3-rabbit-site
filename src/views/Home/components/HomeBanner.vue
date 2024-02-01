@@ -43,4 +43,8 @@ onMounted(() => getBanner())
     height: 500px;
   }
 }
+
+::v-deep .el-carousel__arrow--left {
+  left: calc(250px + 16px);
+}
 </style>

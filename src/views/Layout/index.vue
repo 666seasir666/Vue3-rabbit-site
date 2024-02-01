@@ -24,11 +24,10 @@ onMounted(() => {
 <template>
   <LayoutNav />
   <LayoutHeader />
-  <LayoutFooter />
-  <LayoutFixed />
-
   <!-- 路由出口 -->
   <RouterView />
+  <LayoutFooter />
+  <LayoutFixed />
 </template>
 
 <style lang="scss" scoped></style>
