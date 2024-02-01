@@ -1,8 +1,15 @@
 <script setup>
 // 从 @vueuse/core 库中导入 useScroll 函数
 import { useScroll } from '@vueuse/core'
+
+// 从 '@/stores/category' 中导入名为 useCategoryStore 的状态仓库
+import { useCategoryStore } from '@/stores/category'
+
 // 使用useScroll函数获取y轴滚动位置
 const { y } = useScroll(window)
+
+// 创建名为 categoryStore 的状态仓库实例
+const categoryStore = useCategoryStore()
 </script>
 
 <template>
@@ -12,35 +19,13 @@ const { y } = useScroll(window)
       <RouterLink class="logo" to="/" />
       <!-- 导航区域 -->
       <ul class="app-header-nav">
-        <li class="home">
-          <RouterLink to="/">首页</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">居家</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">美食</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">服饰</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">母婴</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">个护</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">严选</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">数码</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">运动</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/">杂项</RouterLink>
+        <!--  v-for 来遍历名为 categoryList 的数组，并为每个 item 设置了唯一的键（key）值 -->
+        <li
+          class="home"
+          v-for="item in categoryStore.categoryList"
+          :key="item.id"
+        >
+          <RouterLink to="/">{{ item.name }}</RouterLink>
         </li>
       </ul>
 
