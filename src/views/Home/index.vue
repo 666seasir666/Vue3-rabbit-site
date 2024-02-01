@@ -1,11 +1,17 @@
 <script setup>
-import {} from 'vue'
+import HomeCategory from './components/HomeCategory.vue'
+import HomeBanner from './components/HomeBanner.vue'
+import HomeNew from './components/HomeNew.vue'
+import HomeHot from './components/HomeHot.vue'
+import homeProduct from './components/HomeProduct.vue'
 </script>
 
 <template>
-  <div style="height: 12000px"></div>
-  <!-- 二级路由出口 -->
-  <RouterView />
+  <div class="container">
+    <HomeCategory />
+    <HomeBanner />
+  </div>
+  <HomeNew />
+  <HomeHot />
+  <homeProduct />
 </template>
-
-<style lang="scss" scoped></style>
