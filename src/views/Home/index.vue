@@ -3,6 +3,7 @@ import {} from 'vue'
 </script>
 
 <template>
+  <div style="height: 12000px"></div>
   <!-- 二级路由出口 -->
   <RouterView />
 </template>
