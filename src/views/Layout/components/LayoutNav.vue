@@ -10,7 +10,7 @@ const toggleDark = useToggle(isDark)
     <div class="container">
       <ul>
         <template v-if="true">
-          <el-button @click="toggleDark()">切换主题 </el-button>
+          <el-button @click="toggleDark()">切换主题按钮测试</el-button>
 
           <li>
             <a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a>
