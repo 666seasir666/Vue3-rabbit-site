@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 // 引入homePanel组件
-import homePanel from './homePanel.vue'
+import HomePanel from './HomePanel.vue'
 
 // 引入getHotAPI函数
 import { getHotAPI } from '@/apis/home'
@@ -21,17 +21,18 @@ onMounted(() => getHotList())
 </script>
 
 <template>
-  <homePanel Title="人气推荐" SubTitle="人气爆款 不容错过">
+  <HomePanel Title="人气推荐" SubTitle="人气爆款 不容错过">
     <ul class="goods-list">
       <li v-for="item in hotList" :key="item.id">
         <RouterLink to="/">
-          <img :src="item.picture" alt="" />
+          <img v-img-lazy="item.picture" alt="" />
+          <!-- <img :src="item.picture" alt="" /> -->
           <p class="name">{{ item.title }}</p>
           <p class="desc">{{ item.alt }}</p>
         </RouterLink>
       </li>
     </ul>
-  </homePanel>
+  </HomePanel>
 </template>
 
 <style scoped lang="scss">

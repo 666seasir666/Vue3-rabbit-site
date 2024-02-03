@@ -19,7 +19,6 @@ export function getFloorAPI() {
   })
 }
 
-// 导出一个函数，用于获取人气推荐API
 export function getHotAPI() {
   // 返回一个实例，url为/home/new
   return instance({

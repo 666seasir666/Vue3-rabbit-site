@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 // 引入homePanel组件
-import homePanel from './homePanel.vue'
+import HomePanel from './HomePanel.vue'
 
 // 引入getFloorAPI函数
 import { getFloorAPI } from '@/apis/home'
