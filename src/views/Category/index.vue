@@ -1,16 +1,41 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+// 导入面包屑导航分类接口
 import { getCategoryAPI } from '@/apis/category'
+
+// 导入路由模块
 import { useRoute } from 'vue-router'
 
+// 从 @/apis/home 文件中导入 getBannerAPI 方法
+import { getBannerAPI } from '@/apis/home'
+
+// 声明一个变量用于存储分类数据
 const categoryData = ref({})
+// 获取路由信息
 const route = useRoute()
+// 调用接口获取分类数据
 const getCategory = async () => {
   const res = await getCategoryAPI(route.params.id)
+  // 将获取到的面包屑导航分类数据存储到categoryData中
   categoryData.value = res.result
-  console.log(res.result)
 }
+// 当组件加载完成时调用getCategory函数
 onMounted(() => getCategory())
+
+// 获取banner数据
+// 声明一个变量BannerList，并将其赋值为一个ref对象
+const BannerList = ref([])
+// 声明一个函数getBanner，用于获取banner列表
+const getBanner = async () => {
+  // 调用getBannerAPI接口，获取banner列表
+  const res = await getBannerAPI({
+    distributionSite: '2'
+  })
+  // 将获取到的banner列表赋值给BannerList
+  BannerList.value = res.result
+}
+// 当组件加载完毕时，调用getBanner函数
+onMounted(() => getBanner())
 </script>
 
 <template>
@@ -22,6 +47,14 @@ onMounted(() => getCategory())
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>{{ categoryData.name }}</el-breadcrumb-item>
         </el-breadcrumb>
+      </div>
+      <!-- 轮播图 -->
+      <div class="home-banner">
+        <el-carousel height="500px">
+          <el-carousel-item v-for="item in BannerList" :key="item.id">
+            <img :src="item.imgUrl" alt="" />
+          </el-carousel-item>
+        </el-carousel>
       </div>
     </div>
   </div>
@@ -102,6 +135,17 @@ onMounted(() => getCategory())
 
   .bread-container {
     padding: 25px 0;
+  }
+}
+
+.home-banner {
+  width: 1240px;
+  height: 500px;
+  margin: 0 auto;
+
+  img {
+    width: 100%;
+    height: 500px;
   }
 }
 </style>
