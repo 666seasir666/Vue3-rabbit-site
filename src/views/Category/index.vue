@@ -4,7 +4,7 @@ import { ref, onMounted } from 'vue'
 import { getCategoryAPI } from '@/apis/category'
 
 // 导入路由模块
-import { useRoute } from 'vue-router'
+import { useRoute, onBeforeRouteUpdate } from 'vue-router'
 
 // 从 @/apis/home 文件中导入 getBannerAPI 方法
 import { getBannerAPI } from '@/apis/home'
@@ -13,19 +13,24 @@ import GoodsItem from '../Home/components/GoodsItem.vue'
 
 // 声明一个变量用于存储分类数据
 const categoryData = ref({})
-// 获取路由信息
+// 获取当前路由对象
 const route = useRoute()
-// 调用接口获取分类数据
-const getCategory = async () => {
-  const res = await getCategoryAPI(route.params.id)
+// 调用接口异步获取分类类别数据的函数数据
+const getCategory = async (id = route.params.id) => {
+  // 调用getCategoryAPI函数，传入id参数，获取分类信息
+  const res = await getCategoryAPI(id)
   // 将获取到的面包屑导航分类数据存储到categoryData中
   categoryData.value = res.result
 }
 // 当组件加载完成时调用getCategory函数
 onMounted(() => getCategory())
 
+onBeforeRouteUpdate((to) => {
+  // 根据to参数的id获取分类信息
+  getCategory(to.params.id)
+})
+
 // 获取banner数据
-// 声明一个变量BannerList，并将其赋值为一个ref对象
 const BannerList = ref([])
 // 声明一个函数getBanner，用于获取banner列表
 const getBanner = async () => {
