@@ -25,6 +25,7 @@ onMounted(() => getHotList())
     <ul class="goods-list">
       <li v-for="item in hotList" :key="item.id">
         <RouterLink to="/">
+          <!-- 【人气爆款 不容错过】列表图片懒加载 -->
           <img v-img-lazy="item.picture" alt="#" />
           <!-- <img :src="item.picture" alt="" /> -->
           <p class="name">{{ item.title }}</p>
