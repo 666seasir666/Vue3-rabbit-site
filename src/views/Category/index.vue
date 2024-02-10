@@ -1,48 +1,16 @@
 <script setup>
-import { ref, onMounted } from 'vue'
-// 导入面包屑导航分类接口
-import { getCategoryAPI } from '@/apis/category'
-
-// 导入路由模块
-import { useRoute, onBeforeRouteUpdate } from 'vue-router'
-
-// 从 @/apis/home 文件中导入 getBannerAPI 方法
-import { getBannerAPI } from '@/apis/home'
-
+// 导入 GoodsItem 组件
 import GoodsItem from '../Home/components/GoodsItem.vue'
 
-// 声明一个变量用于存储分类数据
-const categoryData = ref({})
-// 获取当前路由对象
-const route = useRoute()
-// 调用接口异步获取分类类别数据的函数数据
-const getCategory = async (id = route.params.id) => {
-  // 调用getCategoryAPI函数，传入id参数，获取分类信息
-  const res = await getCategoryAPI(id)
-  // 将获取到的面包屑导航分类数据存储到categoryData中
-  categoryData.value = res.result
-}
-// 当组件加载完成时调用getCategory函数
-onMounted(() => getCategory())
+// 导入 useBanner 自定义组合式函数
+import { useBanner } from './composables/useBanner'
+// 使用 useBanner 获取 Banner 数据
+const { BannerList } = useBanner()
 
-onBeforeRouteUpdate((to) => {
-  // 根据to参数的id获取分类信息
-  getCategory(to.params.id)
-})
-
-// 获取banner数据
-const BannerList = ref([])
-// 声明一个函数getBanner，用于获取banner列表
-const getBanner = async () => {
-  // 调用getBannerAPI接口，获取banner列表
-  const res = await getBannerAPI({
-    distributionSite: '2'
-  })
-  // 将获取到的banner列表赋值给BannerList
-  BannerList.value = res.result
-}
-// 当组件加载完毕时，调用getBanner函数
-onMounted(() => getBanner())
+// 导入 useCategory 自定义组合式函数
+import { useCategory } from './composables/useCategory'
+// 使用 useCategory 获取类别数据
+const { categoryData } = useCategory()
 </script>
 
 <template>
