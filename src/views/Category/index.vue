@@ -9,6 +9,8 @@ import { useRoute } from 'vue-router'
 // 从 @/apis/home 文件中导入 getBannerAPI 方法
 import { getBannerAPI } from '@/apis/home'
 
+import GoodsItem from '../Home/components/GoodsItem.vue'
+
 // 声明一个变量用于存储分类数据
 const categoryData = ref({})
 // 获取路由信息
@@ -55,6 +57,31 @@ onMounted(() => getBanner())
             <img :src="item.imgUrl" alt="" />
           </el-carousel-item>
         </el-carousel>
+      </div>
+      <!-- 一级分类>所有分类 -->
+      <div class="sub-list">
+        <h3>全部分类</h3>
+        <ul>
+          <li v-for="i in categoryData.children" :key="i.id">
+            <RouterLink to="/">
+              <img :src="i.picture" />
+              <p>{{ i.name }}</p>
+            </RouterLink>
+          </li>
+        </ul>
+      </div>
+      <!-- 居家生活用品 -->
+      <div
+        class="ref-goods"
+        v-for="item in categoryData.children"
+        :key="item.id"
+      >
+        <div class="head">
+          <h3>- {{ item.name }}-</h3>
+        </div>
+        <div class="body">
+          <GoodsItem v-for="good in item.goods" :goods="good" :key="good.id" />
+        </div>
       </div>
     </div>
   </div>
