@@ -5,6 +5,7 @@ import Category from '@/views/Category/index.vue'
 import Home from '@/views/Home/index.vue'
 import Layout from '@/views/Layout/index.vue'
 import Login from '@/views/Login/index.vue'
+import SubCategory from '@/views/SubCategory/index.vue'
 
 // 创建一个路由实例
 const router = createRouter({
@@ -23,6 +24,10 @@ const router = createRouter({
         {
           path: 'category/:id',
           component: Category
+        },
+        {
+          path: 'category/sub/:id',
+          component: SubCategory
         }
       ]
     },
