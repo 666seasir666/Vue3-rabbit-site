@@ -14,18 +14,39 @@ const getCategoryData = async () => {
 onMounted(() => getCategoryData())
 
 // 获取基础列表数据渲染
-const goodList = ref([])
+const goodList = ref([]) // 用于存储商品列表的响应式变量
 const reqData = ref({
-  categoryId: route.params.id,
+  categoryId: route.params.id, // 请求参数，通常是从路由参数中获取
   page: 1, // 当前页码
   pageSize: 20, // 每页显示数量
   sortField: 'publishTime' //按照时间排序
 })
+
+// 异步函数：获取商品列表数据
 const getgoodList = async () => {
   const res = await getSubCategoryAPI(reqData.value)
-  goodList.value = res.result.items
+  goodList.value = res.result.items // 更新商品列表
 }
-onMounted(() => getgoodList())
+onMounted(() => getgoodList()) // 组件挂载时触发获取商品列表数据
+
+// tab切换数据筛选
+const tabChange = () => {
+  reqData.value.paye = 1 //初始化当前页数为第一页
+  getgoodList() // 重新获取商品列表数据
+}
+
+// 定义禁止加载
+const disabled = ref(false)
+// 限滚动加载更多数据
+const load = async () => {
+  reqData.value.page++ // 获取下一页数据
+  const res = await getSubCategoryAPI(reqData.value)
+  goodList.value = [...goodList.value, ...res.result.items] // 合并新数据到原数组中
+  // 判断是否还有下一页数据，如果没有禁止加载数据
+  if (res.result.items.length === 0) {
+    disabled.value = true
+  }
+}
 </script>
 
 <template>
@@ -41,12 +62,19 @@ onMounted(() => getgoodList())
       </el-breadcrumb>
     </div>
     <div class="sub-container">
-      <el-tabs>
+      <el-tabs v-model="reqData.sortField" @tab-change="tabChange">
+        <!-- 注意！ -->
+        <!-- name="publishTime"  name="orderNum"  name="evaluateNum"  按照接口文档来写！ -->
         <el-tab-pane label="最新商品" name="publishTime"></el-tab-pane>
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <!-- Infinite Scroll 无限滚动 -->
+      <div
+        class="body"
+        v-infinite-scroll="load"
+        :infinite-scroll-disabled="disabled"
+      >
         <!-- 商品列表-->
         <GoodsItem v-for="goods in goodList" :goods="goods" :key="goods.id" />
       </div>
