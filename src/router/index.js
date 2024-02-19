@@ -35,7 +35,12 @@ const router = createRouter({
       path: '/Login',
       component: Login
     }
-  ]
+  ],
+  // 路由滚动行为
+  scrollBehavior() {
+    // return 期望滚动到哪个的位置
+    return { top: 0 }
+  }
 })
 
 // 导出路由实例
