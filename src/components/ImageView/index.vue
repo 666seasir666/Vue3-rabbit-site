@@ -1,13 +1,6 @@
 <script setup>
-import { ref } from 'vue'
-
-// 创建一个响应式变量 curIndex，初始值为 0
-const curIndex = ref(0)
-// 定义鼠标进入事件处理函数，接收参数 i 表示当前索引
-const mouseEnterFn = (i) => {
-  // 更新 curIndex 的值为参数 i，表示鼠标进入的索引
-  curIndex.value = i
-}
+import { ref, watch } from 'vue'
+import { useMouseInElement } from '@vueuse/core'
 
 // 图片列表
 const imageList = [
@@ -17,6 +10,58 @@ const imageList = [
   'https://yanxuan-item.nosdn.127.net/f93243224dc37674dfca5874fe089c60.jpg',
   'https://yanxuan-item.nosdn.127.net/f881cfe7de9a576aaeea6ee0d1d24823.jpg'
 ]
+
+// 创建一个响应式变量 curIndex，初始值为 0
+const curIndex = ref(0)
+// 定义鼠标进入事件处理函数，接收参数 i 表示当前索引
+const mouseEnterFn = (i) => {
+  // 更新 curIndex 的值为参数 i，表示鼠标进入的索引
+  curIndex.value = i
+}
+
+// 获取放大镜鼠标跟随元素
+const target = ref(null)
+const { elementX, elementY, isOutside } = useMouseInElement(target)
+
+// 3. 控制滑块跟随鼠标移动（监听elementX/Y变化，一旦变化 重新设置left/top）
+const left = ref(0)
+const top = ref(0)
+
+const positionX = ref(0)
+const positionY = ref(0)
+watch([elementX, elementY, isOutside], () => {
+  // 如果鼠标没有移入到盒子里面 直接不执行后面的逻辑
+  if (isOutside.value) return
+  console.log('后续逻辑执行了')
+  // 有效范围内控制滑块距离
+  // 横向
+  if (elementX.value > 100 && elementX.value < 300) {
+    left.value = elementX.value - 100
+  }
+  // 纵向
+  if (elementY.value > 100 && elementY.value < 300) {
+    top.value = elementY.value - 100
+  }
+
+  // 处理边界
+  if (elementX.value > 300) {
+    left.value = 200
+  }
+  if (elementX.value < 100) {
+    left.value = 0
+  }
+
+  if (elementY.value > 300) {
+    top.value = 200
+  }
+  if (elementY.value < 100) {
+    top.value = 0
+  }
+
+  // 控制大图的显示
+  positionX.value = -left.value * 2
+  positionY.value = -top.value * 2
+})
 </script>
 
 <template>
@@ -25,7 +70,7 @@ const imageList = [
     <div class="middle" ref="target">
       <img :src="imageList[curIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `0px`, top: `0px` }"></div>
+      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
