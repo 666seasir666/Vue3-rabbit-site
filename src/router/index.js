@@ -6,6 +6,7 @@ import Home from '@/views/Home/index.vue'
 import Layout from '@/views/Layout/index.vue'
 import Login from '@/views/Login/index.vue'
 import SubCategory from '@/views/SubCategory/index.vue'
+import Detail from '@/views/Detail/index.vue'
 
 // 创建一个路由实例
 const router = createRouter({
@@ -28,6 +29,10 @@ const router = createRouter({
         {
           path: 'category/sub/:id',
           component: SubCategory
+        },
+        {
+          path: 'detail/:id',
+          component: Detail
         }
       ]
     },
@@ -37,6 +42,7 @@ const router = createRouter({
     }
   ],
   // 路由滚动行为
+  // https://router.vuejs.org/zh/guide/advanced/scroll-behavior.html
   scrollBehavior() {
     // return 期望滚动到哪个的位置
     return { top: 0 }
