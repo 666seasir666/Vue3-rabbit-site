@@ -12,9 +12,10 @@ import '@/styles/common.scss'
 // 引入懒加载指令插件并注册
 import { lazyPlugin } from '@/directives'
 
-const app = createApp(App)
+// 引入全局注册组件
+import { componentPlugin } from '@/components'
 
-// import VueLazyload from 'vue-lazyload'
+const app = createApp(App)
 
 // 创建Pinia实例
 app.use(createPinia())
@@ -24,5 +25,7 @@ app.use(router)
 // app.use(VueLazyload)
 // 添加图片懒加载
 app.use(lazyPlugin)
+// 添加全局注册组件
+app.use(componentPlugin)
 // 挂载到#app
 app.mount('#app')
