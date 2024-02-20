@@ -7,9 +7,9 @@ import { computed } from 'vue'
 // 获取热榜商品数据
 const HotListProducts = ref([])
 const route = useRoute()
-const GetHotListProducts = async () => {
+const GetHotListProducts = async (id = route.params.id) => {
   const res = await FetchGoodsHotAPI({
-    id: route.params.id,
+    id: id,
     type: props.type
   })
   HotListProducts.value = res.result
@@ -36,7 +36,7 @@ const title = computed(() => TITLEMAP[props.hotType])
     <h3>{{ title }}</h3>
     <!-- 商品区块 -->
     <RouterLink
-      to="/"
+      :to="`/detail/${item.id}`"
       class="goods-item"
       v-for="item in HotListProducts"
       :key="item.id"

@@ -25,7 +25,7 @@ onMounted(() => {
   <LayoutNav />
   <LayoutHeader />
   <!-- 路由出口 -->
-  <RouterView />
+  <RouterView :key="$route.fullPath" />
   <LayoutFooter />
   <LayoutFixed />
 </template>
