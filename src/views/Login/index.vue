@@ -7,7 +7,7 @@ import { User, Lock } from '@element-plus/icons-vue'
 
 // 导入路由
 import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user.js'
 
 const userStore = useUserStore()
 
@@ -45,8 +45,7 @@ const doLogin = () => {
     // 以valid做为判断条件 如果通过校验才执行登录逻辑
     if (valid) {
       // TODO LOGIN
-      // await loginAPI({ account, password })
-      userStore.getUserInfo({ account, password })
+      await userStore.getUserInfo({ account, password })
       // 1. 提示用户
       ElMessage({ type: 'success', message: '登录成功' })
       // 2. 跳转首页

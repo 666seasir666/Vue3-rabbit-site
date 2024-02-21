@@ -19,6 +19,7 @@
     "axios": "^1.6.7",
     "element-plus": "^2.5.5",
     "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
     "unplugin-element-plus": "^0.8.0",
     "vue": "^3.4.15",
     "vue-lazyload": "^3.0.0",
