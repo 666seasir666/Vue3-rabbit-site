@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
+// 引入 Element Plus 图标
+import { User, Lock } from '@element-plus/icons-vue'
 import { loginAPI } from '@/apis/user'
 // 导入路由
 import { useRouter } from 'vue-router'
@@ -16,10 +18,10 @@ const userInfo = ref({
 
 // 规则数据对象
 const rules = {
-  account: [{ required: true, message: '用户名不能为空' }],
+  account: [{ required: true, message: '用户名不能为空', trigger: 'blur' }],
   password: [
-    { required: true, message: '密码不能为空' },
-    { min: 6, max: 24, message: '密码长度要求6-14个字符' }
+    { required: true, message: '密码不能为空', trigger: 'blur' },
+    { min: 6, max: 24, message: '密码长度要求6-14个字符', trigger: 'blur' }
   ],
   agree: [
     {
@@ -77,13 +79,24 @@ const doLogin = () => {
               label-position="right"
               :rules="rules"
               label-width="60px"
-              status-icon
             >
               <el-form-item prop="account" label="账户">
-                <el-input v-model="userInfo.account" />
+                <el-input
+                  v-model="userInfo.account"
+                  clearable
+                  :prefix-icon="User"
+                  placeholder="请输入用户名"
+                />
               </el-form-item>
               <el-form-item prop="password" label="密码">
-                <el-input v-model="userInfo.password" />
+                <el-input
+                  v-model="userInfo.password"
+                  clearable
+                  :prefix-icon="Lock"
+                  placeholder="请输入密码"
+                  type="password"
+                  show-password
+                />
               </el-form-item>
               <el-form-item prop="agree" label-width="22px">
                 <el-checkbox v-model="userInfo.agree" size="large">
