@@ -57,11 +57,25 @@ export const useCartStore = defineStore(
         })
     }
     // 计算属性
+    // 1.总的数量，所有项的count相加
     const allCount = computed(() =>
       cartList.value.reduce((p, c) => p + c.count, 0)
     )
+    // 2.总价 所有项的count * price之和
     const allPrice = computed(() =>
       cartList.value.reduce((p, c) => p + c.count * c.price, 0)
+    )
+    // 3.已选数量
+    const selectedCount = computed(() =>
+      cartList.value
+        .filter((item) => item.selected)
+        .reduce((p, c) => p + c.count, 0)
+    )
+    // 4.已选择商品价格合计
+    const selectedPrice = computed(() =>
+      cartList.value
+        .filter((item) => item.selected)
+        .reduce((p, c) => p + c.count * c.price, 0)
     )
     // 购物车单选功能
     const singleCheck = (skuId, selected) => {
@@ -81,6 +95,8 @@ export const useCartStore = defineStore(
       delCart,
       allCount,
       allPrice,
+      selectedCount,
+      selectedPrice,
       singleCheck,
       allCheck,
       isAll
