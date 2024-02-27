@@ -31,7 +31,6 @@ const countChange = (count) => {
 // 添加购物车
 const addCart = () => {
   if (skuObj.skuId) {
-    console.log('规格已经选择了')
     cartStore.addCart({
       id: goods.value.id, //商品id
       name: goods.value.name, //商品名字

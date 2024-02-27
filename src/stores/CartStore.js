@@ -2,6 +2,7 @@
 
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 export const useCartStore = defineStore(
   'cart',
@@ -27,9 +28,40 @@ export const useCartStore = defineStore(
         cartList.value.push(goods)
       }
     }
+    // 删除购物车
+    const delCart = async (skuId) => {
+      // 找到要删除项的下标值
+      const idx = cartList.value.findIndex((item) => skuId === item.skuId)
+
+      // 弹出确认框
+      ElMessageBox.confirm('确定删除该商品吗?', '警告', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        draggable: true // 是否可以拖拽
+      })
+        .then(() => {
+          // 用户点击确定时执行删除商品的逻辑
+          cartList.value.splice(idx, 1)
+
+          ElMessage({
+            type: 'success',
+            message: '删除商品成功'
+          })
+        })
+        .catch(() => {
+          // 用户点击取消时，不执行删除商品的逻辑
+          ElMessage({
+            type: 'info',
+            message: '取消删除商品'
+          })
+        })
+    }
+
     return {
       cartList,
-      addCart
+      addCart,
+      delCart
     }
   },
   {
