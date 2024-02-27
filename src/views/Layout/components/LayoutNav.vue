@@ -2,12 +2,25 @@
 // // 引入切换主题按钮测试
 import { useDark, useToggle } from '@vueuse/core'
 import { useUserStore } from '@/stores/user.js'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+
+const router = useRouter()
 
 // 切换主题按钮测试
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
 const userStore = useUserStore()
+
+const confirm = () => {
+  // 清除用户信息
+  userStore.clearUserInfo()
+  // 跳转到登录页
+  router.push('/login')
+  // 提示用户退出成功
+  ElMessage.warning('退出成功')
+}
 </script>
 
 <template>
@@ -25,6 +38,7 @@ const userStore = useUserStore()
           </li>
           <li>
             <el-popconfirm
+              @confirm="confirm"
               title="确认退出吗?"
               confirm-button-text="确认"
               cancel-button-text="取消"
