@@ -3,6 +3,11 @@ import { useCartStore } from '@/stores/CartStore.js'
 
 const cartStore = useCartStore()
 // const cartList = []
+
+const singleChek = (i, selected) => {
+  // i表示skuId判断条件，selected表示选中状态
+  cartStore.singleCheck(i.skuId, selected)
+}
 </script>
 
 <template>
@@ -26,7 +31,11 @@ const cartStore = useCartStore()
           <tbody>
             <tr v-for="i in cartStore.cartList" :key="i.id">
               <td>
-                <el-checkbox />
+                <!-- 单选框 -->
+                <el-checkbox
+                  :model-value="i.selected"
+                  @change="(selected) => singleChek(i, selected)"
+                />
               </td>
               <td>
                 <div class="goods">
