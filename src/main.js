@@ -27,7 +27,6 @@ pinia.use(piniaPluginPersistedstate)
 // 创建Pinia实例
 app.use(createPinia())
 
-app.use(pinia)
 // 添加路由
 app.use(router)
 // 添加lazyPlugin

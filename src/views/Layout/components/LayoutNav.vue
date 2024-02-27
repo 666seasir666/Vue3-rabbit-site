@@ -1,19 +1,27 @@
 <script setup>
+// // 引入切换主题按钮测试
 import { useDark, useToggle } from '@vueuse/core'
+import { useUserStore } from '@/stores/user.js'
 
+// 切换主题按钮测试
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+
+const userStore = useUserStore()
 </script>
 
 <template>
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <template v-if="false">
+        <template v-if="userStore.userInfo.token">
           <el-button @click="toggleDark()">切换主题按钮测试</el-button>
 
           <li>
-            <a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a>
+            <a href="javascript:;"
+              ><i class="iconfont icon-user"></i
+              >{{ userStore.userInfo.account }}</a
+            >
           </li>
           <li>
             <el-popconfirm
