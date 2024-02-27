@@ -18,22 +18,25 @@ import { componentPlugin } from '@/components'
 
 const app = createApp(App)
 
-// 将插件添加到 pinia 实例上
+// 创建 Pinia 实例
 const pinia = createPinia()
 
 // 注册持久化插件
 pinia.use(piniaPluginPersistedstate)
 
-// 创建Pinia实例
-app.use(createPinia())
+// 将 Pinia 实例添加到应用
+app.use(pinia)
 
 // 添加路由
 app.use(router)
+
 // 添加lazyPlugin
 // app.use(VueLazyload)
 // 添加图片懒加载
 app.use(lazyPlugin)
+
 // 添加全局注册组件
 app.use(componentPlugin)
+
 // 挂载到#app
 app.mount('#app')
