@@ -11,7 +11,6 @@ export const useCartStore = defineStore(
     const cartList = ref([])
     // 2. 定义action - addCart
     const addCart = (goods) => {
-      console.log('添加', goods)
       // 添加购物车操作
       // 已添加过 - count + 1
       // 没有添加过 - 直接push
