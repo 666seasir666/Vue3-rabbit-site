@@ -7,12 +7,12 @@ import { User, Lock } from '@element-plus/icons-vue'
 
 // 导入路由
 import { useRouter } from 'vue-router'
-// import { useUserStore } from '@/stores/user.js'
+import { useUserStore } from '@/stores/user.js'
 
-// const userStore = useUserStore()
+const userStore = useUserStore()
 
 const router = useRouter()
-import { loginAPI } from '@/apis/user.js'
+
 // 表单数据对象
 const userInfo = ref({
   account: 'xiaotuxian001',
@@ -44,10 +44,10 @@ const doLogin = () => {
     // valid: 所有表单都通过校验  才为true
     // 以valid做为判断条件 如果通过校验才执行登录逻辑
     if (valid) {
-      // TODO LOGIN
       // 1. 登录逻辑
-      const res = await loginAPI({ account, password })
-      console.log(res)
+      // const res = await loginAPI({ account, password })
+      // console.log(res)
+      await userStore.getUserInfo({ account, password })
       // 1. 提示用户
       ElMessage({ type: 'success', message: '登录成功' })
       // 2. 跳转首页
