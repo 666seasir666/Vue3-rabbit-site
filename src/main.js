@@ -21,8 +21,13 @@ const app = createApp(App)
 // 将插件添加到 pinia 实例上
 const pinia = createPinia()
 
+// 注册持久化插件
+pinia.use(piniaPluginPersistedstate)
+
 // 创建Pinia实例
 app.use(createPinia())
+
+app.use(pinia)
 // 添加路由
 app.use(router)
 // 添加lazyPlugin
@@ -33,6 +38,3 @@ app.use(lazyPlugin)
 app.use(componentPlugin)
 // 挂载到#app
 app.mount('#app')
-// 挂载到pinia.use
-pinia.use(piniaPluginPersistedstate)
-app.use(pinia)

@@ -187,7 +187,10 @@ const doLogin = () => {
 
   .wrapper {
     width: 380px;
-    background: #fff;
+    // 登录框背景颜色
+    background: rgba(255, 255, 255, 0.24);
+    backdrop-filter: blur(20px);
+    border-radius: 18px;
     position: absolute;
     left: 50%;
     top: 54px;
@@ -198,7 +201,6 @@ const doLogin = () => {
       font-size: 14px;
       height: 55px;
       margin-bottom: 20px;
-      border-bottom: 1px solid #f5f5f5;
       display: flex;
       padding: 0 40px;
       text-align: right;
@@ -360,5 +362,7 @@ const doLogin = () => {
   background: $xtxColor;
   width: 100%;
   color: #fff;
+  border-radius: 30px;
+  border: none;
 }
 </style>
