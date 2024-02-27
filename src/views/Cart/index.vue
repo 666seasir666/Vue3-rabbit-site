@@ -8,6 +8,11 @@ const singleChek = (i, selected) => {
   // i表示skuId判断条件，selected表示选中状态
   cartStore.singleCheck(i.skuId, selected)
 }
+
+// 购物车全选功能
+const allCheck = (selected) => {
+  cartStore.allCheck(selected)
+}
 </script>
 
 <template>
@@ -18,7 +23,10 @@ const singleChek = (i, selected) => {
           <thead>
             <tr>
               <th width="120">
-                <el-checkbox />
+                <el-checkbox
+                  :model-value="cartStore.isAll"
+                  @change="allCheck"
+                />
               </th>
               <th width="400">商品信息</th>
               <th width="220">单价</th>

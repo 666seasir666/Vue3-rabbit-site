@@ -69,13 +69,21 @@ export const useCartStore = defineStore(
       const item = cartList.value.find((item) => skuId === item.skuId)
       item.selected = selected
     }
+    // 购物车全选功能
+    const allCheck = (selected) => {
+      cartList.value.forEach((item) => (item.selected = selected))
+    }
+    // 是否全选
+    const isAll = computed(() => cartList.value.every((item) => item.selected))
     return {
       cartList,
       addCart,
       delCart,
       allCount,
       allPrice,
-      singleCheck
+      singleCheck,
+      allCheck,
+      isAll
     }
   },
   {
