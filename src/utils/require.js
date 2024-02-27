@@ -45,9 +45,10 @@ instance.interceptors.response.use(
 
     // 401 token失效处理
     // 1.清除本地用户登录数据
-    if (e.response.status === 401) {
+    if (e.response && e.response.status === 401) {
       userStore.clearUserInfo()
       router.push('/login')
+      ElMessage.warning('token校验失败')
     }
     return Promise.reject(e)
   }
