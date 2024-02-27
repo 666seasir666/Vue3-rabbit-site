@@ -1,6 +1,7 @@
 <script setup>
 // 从 '@/stores/category' 中导入名为 useCategoryStore 的状态仓库
 import { useCategoryStore } from '@/stores/category'
+import HeaderCart from './HeaderCart.vue'
 
 // 创建名为 categoryStore 的状态仓库实例
 const categoryStore = useCategoryStore()
@@ -29,6 +30,7 @@ const categoryStore = useCategoryStore()
         <input type="text" placeholder="搜一搜" />
       </div>
       <!-- 头部购物车 -->
+      <HeaderCart />
     </div>
   </header>
 </template>
