@@ -1,7 +1,7 @@
 // 封装购物车模块
 
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 export const useCartStore = defineStore(
@@ -57,11 +57,19 @@ export const useCartStore = defineStore(
           })
         })
     }
-
+    // 计算属性
+    const allCount = computed(() =>
+      cartList.value.reduce((p, c) => p + c.count, 0)
+    )
+    const allPrice = computed(() =>
+      cartList.value.reduce((p, c) => p + c.count * c.price, 0)
+    )
     return {
       cartList,
       addCart,
-      delCart
+      delCart,
+      allCount,
+      allPrice
     }
   },
   {
