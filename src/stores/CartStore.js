@@ -8,7 +8,7 @@ import {
   insertCartAPI,
   findNewCartListAPI,
   deleteCartAPI
-} from '@/apis/Cart.js'
+} from '@/apis/cart.js'
 // import { useRouter } from 'vue-router'
 
 export const useCartStore = defineStore(

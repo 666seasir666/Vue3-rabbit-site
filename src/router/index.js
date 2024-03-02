@@ -8,6 +8,7 @@ import Login from '@/views/Login/index.vue'
 import SubCategory from '@/views/SubCategory/index.vue'
 import Detail from '@/views/Detail/index.vue'
 import Cart from '@/views/Cart/index.vue'
+import Checkout from '@/views/Checkout/index.vue'
 
 // 创建一个路由实例
 const router = createRouter({
@@ -44,6 +45,10 @@ const router = createRouter({
     {
       path: '/Cart',
       component: Cart
+    },
+    {
+      path: '/Checkout',
+      component: Checkout
     }
   ],
   // 路由滚动行为
