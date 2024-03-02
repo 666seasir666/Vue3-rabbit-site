@@ -9,10 +9,12 @@ import {
   findNewCartListAPI,
   deleteCartAPI
 } from '@/apis/Cart.js'
+// import { useRouter } from 'vue-router'
 
 export const useCartStore = defineStore(
   'cart',
   () => {
+    // const router = useRouter() // 获取路由对象
     const userStore = useUserStore() //获取用户数据
     const isLogin = computed(() => userStore.userInfo.token) //获取用户token
     // 1. 定义state - cartList
@@ -32,6 +34,22 @@ export const useCartStore = defineStore(
         await insertCartAPI({ skuId, count }) //加入购物车接口调用
         updateNewList()
       } else {
+        // 未登录状态，跳转到登录页面
+        //   ElMessageBox.confirm('您还未登录，是否前往登录页面?', '提示', {
+        //     confirmButtonText: '前往登录',
+        //     cancelButtonText: '取消',
+        //     type: 'warning',
+        //     showClose: false // 隐藏关闭按钮
+        //   })
+        //     .then(() => {
+        //       // 用户点击确认，跳转到登录页面
+        //       router.push('/login')
+        //     })
+        //     .catch(() => {
+        //       // 用户点击取消，不执行任何操作
+        //     })
+        // }
+
         // 未登录加入购物车的逻辑
         // 添加购物车操作
         // 已添加过 - count + 1
@@ -51,38 +69,49 @@ export const useCartStore = defineStore(
       }
     }
     // 删除购物车
+    const confirmDialogConfig = {
+      title: '确定删除该商品吗?',
+      message: '警告',
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+      draggable: true // 是否可以拖拽
+    }
+
     const delCart = async (skuId) => {
-      if (isLogin.value) {
-        // 调用删除购物车接口
-        await deleteCartAPI([skuId])
-        updateNewList()
-      } else {
-        // 删除本地购物车
-        const idx = cartList.value.findIndex((item) => skuId === item.skuId)
+      // 弹出确认框
+      const confirmResult = await ElMessageBox.confirm(
+        confirmDialogConfig.title,
+        confirmDialogConfig.message,
+        {
+          confirmButtonText: confirmDialogConfig.confirmButtonText,
+          cancelButtonText: confirmDialogConfig.cancelButtonText,
+          type: confirmDialogConfig.type,
+          draggable: confirmDialogConfig.draggable
+        }
+      )
 
-        // 弹出确认框
-        ElMessageBox.confirm('确定删除该商品吗?', '警告', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-          draggable: true // 是否可以拖拽
+      if (confirmResult) {
+        if (isLogin.value) {
+          // 在用户已登录状态下，执行删除购物车接口
+          await deleteCartAPI([skuId])
+          updateNewList()
+        } else {
+          // 在用户未登录状态下，直接删除本地购物车
+          const idx = cartList.value.findIndex((item) => skuId === item.skuId)
+          cartList.value.splice(idx, 1)
+        }
+
+        ElMessage({
+          type: 'success',
+          message: '删除商品成功'
         })
-          .then(() => {
-            // 用户点击确定时执行删除商品的逻辑
-            cartList.value.splice(idx, 1)
-
-            ElMessage({
-              type: 'success',
-              message: '删除商品成功'
-            })
-          })
-          .catch(() => {
-            // 用户点击取消时，不执行删除商品的逻辑
-            ElMessage({
-              type: 'info',
-              message: '取消删除商品'
-            })
-          })
+      } else {
+        // 用户点击取消时，不执行删除商品的逻辑
+        ElMessage({
+          type: 'info',
+          message: '取消删除商品'
+        })
       }
     }
 
