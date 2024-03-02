@@ -86,6 +86,10 @@ export const useCartStore = defineStore(
       }
     }
 
+    // 清除登录状态购物车列表
+    const clearCart = async () => {
+      cartList.value = []
+    }
     // 计算属性
     // 1.总的数量，所有项的count相加
     const allCount = computed(() =>
@@ -123,6 +127,7 @@ export const useCartStore = defineStore(
       cartList,
       addCart,
       delCart,
+      clearCart,
       allCount,
       allPrice,
       selectedCount,

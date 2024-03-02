@@ -7,7 +7,7 @@ import { User, Lock } from '@element-plus/icons-vue'
 
 // 导入路由
 import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/user.js'
+import { useUserStore } from '@/stores/UserStore.js'
 
 const userStore = useUserStore()
 
