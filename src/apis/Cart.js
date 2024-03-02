@@ -23,3 +23,15 @@ export const findNewCartListAPI = () => {
     url: '/member/cart'
   })
 }
+
+// 删除-购物车商品
+// 接口地址：https://apifox.com/apidoc/shared-c05cb8d7-e591-4d9c-aff8-11065a0ec1de/api-67132148
+export const deleteCartAPI = (ids) => {
+  return request({
+    url: '/member/cart',
+    method: 'DELETE',
+    data: {
+      ids
+    }
+  })
+}

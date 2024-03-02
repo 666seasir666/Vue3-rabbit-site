@@ -1,7 +1,7 @@
 <script setup>
 // // 引入切换主题按钮测试
 import { useDark, useToggle } from '@vueuse/core'
-import { useUserStore } from '@/stores/user.js'
+import { useUserStore } from '@/stores/UserStore.js'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 
@@ -97,3 +97,4 @@ const confirm = () => {
   }
 }
 </style>
+@/stores/User.js@/stores/UserStore.js

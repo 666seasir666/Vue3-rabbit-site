@@ -3,8 +3,12 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import { useUserStore } from '@/stores/user.js'
-import { insertCartAPI, findNewCartListAPI } from '@/apis/Cart.js'
+import { useUserStore } from '@/stores/UserStore.js'
+import {
+  insertCartAPI,
+  findNewCartListAPI,
+  deleteCartAPI
+} from '@/apis/Cart.js'
 
 export const useCartStore = defineStore(
   'cart',
@@ -13,14 +17,20 @@ export const useCartStore = defineStore(
     const isLogin = computed(() => userStore.userInfo.token) //获取用户token
     // 1. 定义state - cartList
     const cartList = ref([])
+
+    //封装最新购物车列表函数
+    const updateNewList = async () => {
+      const res = await findNewCartListAPI() //获取最新购物车列表
+      cartList.value = res.result //更新覆盖本地购物车列表
+    }
+
     // 2. 定义action - addCart
     const addCart = async (goods) => {
       const { skuId, count } = goods
       if (isLogin.value) {
         // 登录之后加入购物车的逻辑
         await insertCartAPI({ skuId, count }) //加入购物车接口调用
-        const res = await findNewCartListAPI() //获取最新购物车列表
-        cartList.value = res.result //更新覆盖本地购物车列表
+        updateNewList()
       } else {
         // 未登录加入购物车的逻辑
         // 添加购物车操作
@@ -42,33 +52,40 @@ export const useCartStore = defineStore(
     }
     // 删除购物车
     const delCart = async (skuId) => {
-      // 找到要删除项的下标值
-      const idx = cartList.value.findIndex((item) => skuId === item.skuId)
+      if (isLogin.value) {
+        // 调用删除购物车接口
+        await deleteCartAPI([skuId])
+        updateNewList()
+      } else {
+        // 删除本地购物车
+        const idx = cartList.value.findIndex((item) => skuId === item.skuId)
 
-      // 弹出确认框
-      ElMessageBox.confirm('确定删除该商品吗?', '警告', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-        draggable: true // 是否可以拖拽
-      })
-        .then(() => {
-          // 用户点击确定时执行删除商品的逻辑
-          cartList.value.splice(idx, 1)
+        // 弹出确认框
+        ElMessageBox.confirm('确定删除该商品吗?', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          draggable: true // 是否可以拖拽
+        })
+          .then(() => {
+            // 用户点击确定时执行删除商品的逻辑
+            cartList.value.splice(idx, 1)
 
-          ElMessage({
-            type: 'success',
-            message: '删除商品成功'
+            ElMessage({
+              type: 'success',
+              message: '删除商品成功'
+            })
           })
-        })
-        .catch(() => {
-          // 用户点击取消时，不执行删除商品的逻辑
-          ElMessage({
-            type: 'info',
-            message: '取消删除商品'
+          .catch(() => {
+            // 用户点击取消时，不执行删除商品的逻辑
+            ElMessage({
+              type: 'info',
+              message: '取消删除商品'
+            })
           })
-        })
+      }
     }
+
     // 计算属性
     // 1.总的数量，所有项的count相加
     const allCount = computed(() =>

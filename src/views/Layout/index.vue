@@ -6,7 +6,7 @@ import LayoutFooter from './components/LayoutFooter.vue'
 import LayoutFixed from './components/LayoutFixed.vue'
 
 // 导入用于获取导航列表数据的状态仓库
-import { useCategoryStore } from '@/stores/category'
+import { useCategoryStore } from '@/stores/categoryStore'
 
 // 导入 Vue 3 的 onMounted 函数
 import { onMounted } from 'vue'
@@ -31,3 +31,4 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped></style>
+@/stores/categoryStore

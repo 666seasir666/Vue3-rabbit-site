@@ -3,7 +3,7 @@
 import { useScroll } from '@vueuse/core'
 
 // 从 '@/stores/category' 中导入名为 useCategoryStore 的状态仓库
-import { useCategoryStore } from '@/stores/category'
+import { useCategoryStore } from '@/stores/categoryStore'
 
 // 使用useScroll函数获取y轴滚动位置
 const { y } = useScroll(window)
@@ -123,3 +123,4 @@ const categoryStore = useCategoryStore()
   }
 }
 </style>
+@/stores/categoryStore
