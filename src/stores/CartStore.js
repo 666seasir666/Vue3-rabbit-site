@@ -125,6 +125,7 @@ export const useCartStore = defineStore(
     const isAll = computed(() => cartList.value.every((item) => item.selected))
     return {
       cartList,
+      updateNewList,
       addCart,
       delCart,
       clearCart,
