@@ -3,28 +3,41 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { useUserStore } from '@/stores/user.js'
+import { insertCartAPI, findNewCartListAPI } from '@/apis/Cart.js'
 
 export const useCartStore = defineStore(
   'cart',
   () => {
+    const userStore = useUserStore() //获取用户数据
+    const isLogin = computed(() => userStore.userInfo.token) //获取用户token
     // 1. 定义state - cartList
     const cartList = ref([])
     // 2. 定义action - addCart
-    const addCart = (goods) => {
-      // 添加购物车操作
-      // 已添加过 - count + 1
-      // 没有添加过 - 直接push
-      // 思路：通过匹配传递过来的商品对象中的skuId能不能在cartList中找到，找到了就是添加过
-
-      // 在购物车列表 (cartList) 中查找具有与给定商品 (goods) 相同 skuId 的元素，并将结果存储在 item 变量中。
-      // 如果找到相符的元素，item 将包含该元素的值；如果未找到，item 将为 undefined。
-      const item = cartList.value.find((item) => goods.skuId === item.skuId)
-      if (item) {
-        // 找到了
-        item.count++
+    const addCart = async (goods) => {
+      const { skuId, count } = goods
+      if (isLogin.value) {
+        // 登录之后加入购物车的逻辑
+        await insertCartAPI({ skuId, count }) //加入购物车接口调用
+        const res = await findNewCartListAPI() //获取最新购物车列表
+        cartList.value = res.result //更新覆盖本地购物车列表
       } else {
-        // 没找到
-        cartList.value.push(goods)
+        // 未登录加入购物车的逻辑
+        // 添加购物车操作
+        // 已添加过 - count + 1
+        // 没有添加过 - 直接push
+        // 思路：通过匹配传递过来的商品对象中的skuId能不能在cartList中找到，找到了就是添加过
+
+        // 在购物车列表 (cartList) 中查找具有与给定商品 (goods) 相同 skuId 的元素，并将结果存储在 item 变量中。
+        // 如果找到相符的元素，item 将包含该元素的值；如果未找到，item 将为 undefined。
+        const item = cartList.value.find((item) => goods.skuId === item.skuId)
+        if (item) {
+          // 找到了
+          item.count++
+        } else {
+          // 没找到
+          cartList.value.push(goods)
+        }
       }
     }
     // 删除购物车
