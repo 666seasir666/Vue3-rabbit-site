@@ -15,8 +15,11 @@ const router = useRouter()
 
 // 表单数据对象
 const userInfo = ref({
-  account: 'xiaotuxian001',
-  password: '123456',
+  // account: 'xiaotuxian001',
+  // password: '123456',
+  // agree: true
+  account: 'demo',
+  password: 'hm#qd@23!',
   agree: true
 })
 

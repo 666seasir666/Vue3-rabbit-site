@@ -28,9 +28,9 @@ const switchAddress = (item) => {
   activeAddress.value = item
 }
 const confirm = () => {
-  curAddress.value = activeAddress.value
-  showDialog.value = false
-  curAddress.value = {}
+  curAddress.value = activeAddress.value //更新覆盖地址
+  showDialog.value = false //关闭太弹窗
+  activeAddress.value = {} //初始值
 }
 
 // 创建订单
