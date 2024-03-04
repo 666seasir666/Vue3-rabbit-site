@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { getCheckInfoAPI, submitOrderAPI } from '@/apis/checkout'
+import { getCheckInfoAPI, submitOrderAPI } from '@/apis/checkout.js'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@/stores/CartStore'
 
@@ -31,6 +31,7 @@ const confirm = () => {
   curAddress.value = activeAddress.value //更新覆盖地址
   showDialog.value = false //关闭太弹窗
   activeAddress.value = {} //初始值
+  // ElMessage.success('切换地址成功') //增加这个提示会改变确定按钮样式
 }
 
 // 创建订单
@@ -43,8 +44,8 @@ const submitOrder = async () => {
     goods: checkInfo.value.goods.map((item) => {
       //订单内商品集合
       return {
-        skuId: item.skuId //商品库存量单位id
-        // count: item.count/商品数量
+        skuId: item.skuId, //商品库存量单位id
+        count: item.count //商品数量
       }
     }),
     addressId: curAddress.value.id //收货地址id
@@ -54,7 +55,7 @@ const submitOrder = async () => {
   console.log(OrderId)
   router.push({
     // 跳转到支付页面
-    path: 'pay',
+    path: '/pay',
     query: {
       id: OrderId
     }
@@ -179,7 +180,13 @@ const submitOrder = async () => {
     </div>
   </div>
   <!-- 切换地址 -->
-  <el-dialog v-model="showDialog" title="切换收货地址" width="30%" center>
+  <el-dialog
+    v-model="showDialog"
+    title="切换收货地址"
+    width="30%"
+    :draggable="true"
+    center
+  >
     <div class="addressWrapper">
       <div
         class="text item"
