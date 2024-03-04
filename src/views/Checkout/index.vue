@@ -51,8 +51,7 @@ const submitOrder = async () => {
     addressId: curAddress.value.id //收货地址id
   })
 
-  const OrderId = res.result
-  console.log(OrderId)
+  const OrderId = res.result.id
   router.push({
     // 跳转到支付页面
     path: '/pay',
