@@ -7,3 +7,12 @@ export const getCheckInfoAPI = () => {
     url: '/member/order/pre'
   })
 }
+
+// 提交-订单
+export const submitOrderAPI = (data) => {
+  return request({
+    url: '/member/order',
+    method: 'POST',
+    data
+  })
+}

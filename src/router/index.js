@@ -9,6 +9,7 @@ import SubCategory from '@/views/SubCategory/index.vue'
 import Detail from '@/views/Detail/index.vue'
 import Cart from '@/views/Cart/index.vue'
 import Checkout from '@/views/Checkout/index.vue'
+import Pay from '@/views/Pay/index.vue'
 
 // 创建一个路由实例
 const router = createRouter({
@@ -35,20 +36,24 @@ const router = createRouter({
         {
           path: 'detail/:id',
           component: Detail
+        },
+        {
+          path: '/Cart',
+          component: Cart
+        },
+        {
+          path: '/Checkout',
+          component: Checkout
+        },
+        {
+          path: '/Pay',
+          component: Pay
         }
       ]
     },
     {
       path: '/Login',
       component: Login
-    },
-    {
-      path: '/Cart',
-      component: Cart
-    },
-    {
-      path: '/Checkout',
-      component: Checkout
     }
   ],
   // 路由滚动行为
