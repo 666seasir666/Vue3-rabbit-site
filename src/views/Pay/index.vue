@@ -1,15 +1,45 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 import { getOrderAPI } from '@/apis/pay.js'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { useCountDown } from '@/composables/useCountDown.js'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
+const { formatTime, countDownFinished, start } = useCountDown()
+const router = useRouter() // 使用 useRouter 获取路由实例
 const route = useRoute()
 const payInfo = ref({})
 const getPayInfo = async () => {
   const res = await getOrderAPI(route.query.id)
   payInfo.value = res.result
+  //初始化倒计时秒数
+  start(res.result.countdown)
 }
 onMounted(() => getPayInfo())
+
+// 监听 countDownFinished 的变化，如果倒计时结束，则返回到购物车页面
+watchEffect(() => {
+  if (countDownFinished.value) {
+    ElMessageBox.confirm('是否返回购物车重新下单?', '提示', {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning'
+    })
+      .then(() => {
+        router.push('/cart')
+        ElMessage({
+          type: 'success',
+          message: '跳转成功'
+        })
+      })
+      .catch(() => {
+        ElMessage({
+          type: 'info',
+          message: '取消跳转'
+        })
+      })
+  }
+})
 
 //跳转支付
 //携带订单id以及回调地址跳转到支付地址(get)
@@ -31,7 +61,12 @@ const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redire
         <span class="icon iconfont icon-queren2"></span>
         <div class="tip">
           <p>订单提交成功！请尽快完成支付。</p>
-          <p>支付还剩 <span>24分30秒</span>, 超时后将取消订单</p>
+          <p v-if="!countDownFinished">
+            支付还剩 <span>{{ formatTime }}</span
+            >, 超时后将取消订单
+          </p>
+          <p v-else>支付超时，请返回购物车重新下单</p>
+          <!-- 倒计时结束时显示超时提示 -->
         </div>
         <div class="amount">
           <span>应付总额：</span>

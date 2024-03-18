@@ -31,6 +31,8 @@ onMounted(() => getOrderInfo())
         </p>
         <p class="tip">我们将尽快为您发货，收货期间请保持手机畅通</p>
         <p>支付方式：<span>支付宝</span></p>
+        <!-- 正在尝试访问 undefined 下面的toFixed(2)，而orderInfo上面定义的是空对象，无法访问空对接-->
+        <!-- 2种解决方案：v-if或者加上可选链? -->
         <p>
           支付金额：<span>¥{{ orderInfo.payMoney?.toFixed(2) }}</span>
         </p>
