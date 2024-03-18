@@ -10,6 +10,17 @@ const getPayInfo = async () => {
   payInfo.value = res.result
 }
 onMounted(() => getPayInfo())
+
+//跳转支付
+//携带订单id以及回调地址跳转到支付地址(get)
+// 支付地址
+const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
+const backURL = 'http://localhost:5173/paycallback'
+//当需要在 URL 中传递参数时，为了避免特殊字符对 URL 的解析造成干扰，
+//我们通常需要使用 encodeURIComponent 函数将参数进行编码。
+//该函数会将一些特殊字符（如空格、问号和&等）替换为它们对应的百分比编码值
+const redirectUrl = encodeURIComponent(backURL)
+const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redirectUrl}`
 </script>
 
 <template>
