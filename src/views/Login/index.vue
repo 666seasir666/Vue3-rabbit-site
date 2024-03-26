@@ -156,8 +156,7 @@ const doLogin = () => {
       height: 132px;
       width: 100%;
       text-indent: -9999px;
-      background: url('./assets/images/logo.png') no-repeat center 18px /
-        contain;
+      background: url('/assets/images/logo.png') no-repeat center 18px / contain;
     }
   }
 
@@ -184,7 +183,7 @@ const doLogin = () => {
 }
 
 .login-section {
-  background: url('./assets/images/login-bg.png') no-repeat center / cover;
+  background: url('/assets/images/login-bg.png') no-repeat center / cover;
   height: 488px;
   position: relative;
 

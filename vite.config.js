@@ -15,6 +15,7 @@ import ElementPlus from 'unplugin-element-plus/vite'
 
 // Vite 配置
 export default defineConfig({
+  base: './',
   plugins: [
     // 使用 Vue 插件
     vue(),
