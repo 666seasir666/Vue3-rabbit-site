@@ -1,14 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <link rel="icon" href="/favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_2143783_iq6z4ey5vu.css">
-    <title>小兔鲜儿</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_2143783_iq6z4ey5vu.css">
+  <title>小兔鲜儿</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
+  <!-- 这里放聊天插件js代码 -->
+  <script>
+    ssq.push('setLoginInfo', {
+      user_id: 'b58e64cfxs2ym', // 加密后的用户 id, 必填
+      user_name: 'test_yy', // 用户名， 必填
+      language: 'zh-CN', // 插件语言， 选填          
+      phone: '1592014xxxx', // 手机， 选填
+      email: '123456@qq.com', // 邮箱， 选填
+      description: '套餐B\n客户端\n收费客户', // 描述， 选填
+      label_names: ['标签值1', '标签值2'], // 标签值的名称，为覆盖方式，仅支持传系统已创建的标签值， 选填
+    });
+  </script>
+
+
+</body>
+
 </html>
