@@ -53,5 +53,39 @@ export default defineConfig({
         @use "@/styles/var.scss" as *;`
       }
     }
+  },
+
+  build: {
+    // 配置构建选项
+    rollupOptions: {
+      // 输出选项
+      output: {
+        // 指定 chunks 的入口文件模式
+        entryFileNames: 'js/[name]-[hash].js',
+        // 对代码分割中产生的 chunk 自定义命名
+        chunkFileNames: 'js/[name]-[hash].js',
+        // 对静态资源（如图片、字体等）进行自定义命名
+        assetFileNames(assetInfo) {
+          if (assetInfo.name.endsWith('.css')) {
+            return 'css/[name]-[hash].css'
+          }
+          // 判断资源是否为图片或svg格式
+          const imaExts = ['jpg', 'jpeg', 'png', 'svg', 'gif']
+          if (imaExts.some((ext) => assetInfo.name.endsWith(ext))) {
+            return 'image/[name]-[hash].[ext]'
+          }
+          // 其他资源使用默认命名
+          return 'assets/[name]-[hash].[ext]'
+        }
+      },
+      // 分包配置
+      manualChunks(id) {
+        console.log(id)
+        // 如果 id 中包含 node_modules，则将其归入 vendor 分包
+        if (id.includes('node_modules')) {
+          return 'vendor'
+        }
+      }
+    }
   }
 })
